@@ -7,30 +7,26 @@
   });
   const count = ref(props.initial);
   const doubledCount = computed(() => count.value * 2);
-
-  function addCount(): void {
-    console.log(process.env.NODE_ENV);
-    count.value++;
-  }
 </script>
 
 <template>
-  <v-card>
-    <v-card-title>
-      <v-icon class="me-3">mdi-plus</v-icon>
-      Counter
-
-      <v-spacer />
-
-      <v-btn color="primary" elevation="5" flat @click="addCount">Count Up</v-btn>
-    </v-card-title>
-
-    <v-card-text class="pb-0 mb-0">
-      <h1 class="text-h2 text-center">"{{ count }}"</h1>
-    </v-card-text>
-
-    <v-card-text class="pt-0">
-      <div class="caption text-center">Double is {{ doubledCount }}</div>
-    </v-card-text>
-  </v-card>
+  <q-card class="bg-warning">
+    <q-card-actions>
+      <h5>+ Counter component</h5>
+      <q-space />
+      <q-btn color="negative" no-caps @click="count++">Count UP</q-btn>
+    </q-card-actions>
+    <q-card-section class="text-center">
+      <h2>"{{ count }}"</h2>
+      <h5>Douple is {{ doubledCount }}</h5>
+    </q-card-section>
+  </q-card>
 </template>
+
+<style scoped>
+  h2,
+  h5 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+</style>

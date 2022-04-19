@@ -4,7 +4,7 @@ import AboutView from "./views/AboutView.vue";
 import AccountView from "./views/AccountView.vue";
 import EventDetails from "./VueMastery_RealWorldVue3/components/EventDetails.vue";
 import EventList from "./VueMastery_RealWorldVue3/components/EventList.vue";
-// import ExamplesView from "./views/ExamplesView.vue";
+import ExamplesView from "./views/ExamplesView.vue";
 import GridView from "./views/GridView.vue";
 // import protectedRoute from "./middlewares/protected";
 import StartPageView from "./views/StartPageView.vue";
@@ -22,11 +22,11 @@ const routes: Array<RouteRecordRaw> = [
     name: "StartPage",
     component: StartPageView,
   },
-  // {
-  //   path: "/examples",
-  //   name: "Examples",
-  //   component: ExamplesView,
-  // },
+  {
+    path: "/examples",
+    name: "Examples",
+    component: ExamplesView,
+  },
   {
     path: "/account",
     name: "Account",

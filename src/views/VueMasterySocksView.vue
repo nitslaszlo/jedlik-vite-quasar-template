@@ -16,7 +16,7 @@
 <template>
   <div class="page">
     <div class="nav-bar">
-      Vue Mastery - Intro to Vue 3 course example - composition API (script setup)
+      Vue Mastery - Intro to Vue 3 course example - composition API (with script setup)
     </div>
     <div class="cart">Cart({{ r.cart.length }})</div>
     <ProductDisplay :premium="r.premium" @add-to-cart="updateCart" />

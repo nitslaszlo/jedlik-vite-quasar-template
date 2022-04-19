@@ -3,29 +3,26 @@
 </script>
 
 <template>
-  <v-form>
-    <v-container>
-      <v-row no-gutters>
-        <v-col cols="12" md="6">
-          <v-text-field
-            v-model="color"
-            class="mx-4 my-0"
-            clearable
-            label="Change the color:"
-            prepend-inner-icon="mdi-palette"
-          ></v-text-field>
-        </v-col>
-        <v-col cols="12" md="6">
-          <div class="box mx-4 pa-7 rounded" />
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-form>
+  <q-form class="bg-info q-mt-lg">
+    <p class="q-ma-xs">ColorChecker component</p>
+    <div class="row">
+      <div class="col-xs-12 col-md-6 q-pa-md">
+        <q-input v-model="color" label="Change the color:" outlined type="text">
+          <template #prepend>
+            <q-icon name="mdi-palette" />
+          </template>
+        </q-input>
+      </div>
+      <div class="col-xs-12 col-md-6 q-pa-md">
+        <q-banner class="box shadow-6" rounded>{{ color }}</q-banner>
+      </div>
+    </div>
+  </q-form>
 </template>
 
 <style scoped>
   .box {
     background-color: v-bind(color);
-    border: 1px solid rgba(0, 0, 0, 0.15);
+    border: 3px solid rgba(0, 0, 0, 0.15);
   }
 </style>
