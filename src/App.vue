@@ -185,3 +185,33 @@
     </q-layout>
   </div>
 </template>
+
+<style lang="scss">
+  .slide-fade-enter {
+    transform: translateX(10px);
+    opacity: 0;
+  }
+
+  .slide-fade-enter-active,
+  .slide-fade-leave-active {
+    transition: all 0.2s ease;
+  }
+
+  .slide-fade-leave-to {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+
+  #title {
+    font-size: 10px;
+    @media (min-width: 400px) {
+      font-size: calc(10px + 0.5vw);
+    }
+    @media (min-width: 800px) {
+      font-size: calc(14px + 0.5vw);
+    }
+    @media (min-width: 1200px) {
+      font-size: calc(18px + 0.5vw);
+    }
+  }
+</style>
