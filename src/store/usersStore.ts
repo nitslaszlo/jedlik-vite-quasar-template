@@ -1,5 +1,13 @@
 import $axios from "./axios.instance";
 import { defineStore } from "pinia";
+import { Notify, Loading } from "quasar";
+
+Notify.setDefaults({
+  position: "bottom",
+  textColor: "white",
+  timeout: 3000,
+  actions: [{ icon: "close", color: "white" }],
+});
 
 interface IAddress {
   _id: string;
@@ -17,35 +25,22 @@ interface IUser {
 }
 
 interface IState {
-  loading: boolean;
-  errorMsg: string;
   loggedUser: null | IUser;
 }
 
 export const useUsersStore = defineStore({
   id: "usersStore",
   state: (): IState => ({
-    loading: false,
-    errorMsg: "",
     loggedUser: null,
   }),
   getters: {
-    getLoading(): boolean {
-      return this.loading;
-    },
-    getErrorMsg(): string {
-      return this.errorMsg;
-    },
     getLoggedUser(): null | IUser {
       return this.loggedUser;
     },
   },
   actions: {
-    clearErrorMsg(): void {
-      this.errorMsg = "";
-    },
     async loginUser(params: IUser): Promise<void> {
-      this.loading = true;
+      Loading.show();
       $axios
         .post("auth/login", {
           email: params.email,
@@ -53,25 +48,26 @@ export const useUsersStore = defineStore({
         })
         .then((res) => {
           this.loggedUser = res.data;
-          this.loading = false;
+          Loading.hide();
         })
         .catch(() => {
           this.loggedUser = null;
-          this.loading = false;
-          this.errorMsg = "Error on Authentication";
+          Loading.hide();
+          Notify.create({ message: "Error on Authentication", color: "negative" });
         });
     },
     async logOut(): Promise<void> {
-      this.loading = true;
+      Loading.show();
       $axios
         .post("auth/logout")
         .then(() => {
           this.loggedUser = null;
-          this.loading = false;
+          Loading.hide();
         })
         .catch(() => {
           this.loggedUser = null;
-          this.loading = false;
+          Loading.hide();
+          Notify.create({ message: "Error on log out", color: "negative" });
         });
     },
   },
