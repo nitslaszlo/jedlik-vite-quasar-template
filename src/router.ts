@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import AboutComp from "./VueMastery_RealWorldVue3/components/AboutComp.vue";
 import AboutView from "./views/AboutView.vue";
 import AccountView from "./views/AccountView.vue";
+import QTableViewVue from "./views/QTableView.vue";
 import EventDetails from "./VueMastery_RealWorldVue3/components/EventDetails.vue";
 import EventList from "./VueMastery_RealWorldVue3/components/EventList.vue";
 import ExamplesView from "./views/ExamplesView.vue";
@@ -31,6 +32,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/account",
     name: "Account",
     component: AccountView,
+  },
+  {
+    path: "/qtable",
+    name: "q-table",
+    component: QTableViewVue,
   },
   {
     path: "/socks",

@@ -1,12 +1,10 @@
 <script setup lang="ts">
   import { useI18n } from "vue-i18n";
   import router from "src/router";
-  // import { useUsersStore } from "./store/usersStore";
+  import { useUsersStore } from "./store/usersStore";
 
   const leftDrawer = ref<boolean>(true);
-  // const usersStore = useUsersStore();
-  // const loggedUser = computed(() => usersStore.getLoggedUser);
-  // const notLoggedIn = computed(() => usersStore.getLoggedUser == null);
+  const usersStore = useUsersStore();
 
   let { locale, t } = useI18n({
     inheritLocale: true,
@@ -125,7 +123,8 @@
             <q-avatar>
               <img src="src/assets/Jedlik_small.png" />
             </q-avatar>
-            Jedlik Vite-Quasar Template 2022
+            Jedlik Vite-Quasar {{ $t("template") }} 2022 -
+            {{ usersStore.loggedUser ? usersStore.loggedUser?.name : $t("noUser") }}
           </q-toolbar-title>
           <q-btn flat icon="mdi-comment-text-multiple" @click="toggleLanguage">
             <q-badge color="red" floating>{{ locale }}</q-badge>
@@ -147,7 +146,7 @@
           <!-- routes: -->
           <q-list>
             <template v-for="(menuItem, index) in menuItems" :key="index">
-              <q-item clickable :to="menuItem.route">
+              <q-item clickable :disable="menuItem.disabled" :to="menuItem.route">
                 <q-item-section avatar>
                   <q-icon :name="menuItem.icon" />
                 </q-item-section>
@@ -157,6 +156,13 @@
               </q-item>
               <q-separator v-if="menuItem.separator" :key="'sep' + index" />
             </template>
+            <q-item clickable :disable="usersStore.loggedUser == null" to="/qtable">
+              <q-item-section avatar>
+                <q-icon name="mdi-table" />
+              </q-item-section>
+              <q-item-section>q-table</q-item-section>
+            </q-item>
+            <q-separator />
           </q-list>
           <!-- links: -->
           <q-list>

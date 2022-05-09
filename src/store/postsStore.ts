@@ -19,7 +19,7 @@ interface IPaginatedParams {
   limit: string;
   order: string;
   sort: string;
-  keyword: string;
+  keyword?: string;
 }
 
 interface IIdParams {
@@ -98,7 +98,8 @@ export const usePostsStore = defineStore({
         .then((res) => {
           if (res && res.data) {
             console.log(res.data.status);
-            this.numberOfPosts = res.data.count;
+            this.posts = this.posts.filter((i) => i._id !== params._id);
+            this.numberOfPosts = this.numberOfPosts - 1;
           }
           Loading.hide();
         })

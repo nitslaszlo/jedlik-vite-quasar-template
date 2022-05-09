@@ -49,6 +49,10 @@ export const useUsersStore = defineStore({
         .then((res) => {
           this.loggedUser = res.data;
           Loading.hide();
+          Notify.create({
+            message: `${res.data.name} with ${res.data.email} e-mail is logged in`,
+            color: "positive",
+          });
         })
         .catch(() => {
           this.loggedUser = null;
@@ -63,6 +67,10 @@ export const useUsersStore = defineStore({
         .then(() => {
           this.loggedUser = null;
           Loading.hide();
+          Notify.create({
+            message: "Successful logout",
+            color: "positive",
+          });
         })
         .catch(() => {
           this.loggedUser = null;

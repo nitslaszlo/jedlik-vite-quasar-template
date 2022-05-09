@@ -4,9 +4,6 @@
   const usersStore = useUsersStore();
 
   const anyLoggedUser = computed(() => (usersStore.getLoggedUser ? true : false));
-  const isLoading = computed(() => usersStore.getLoading);
-  const errorMsg = computed(() => usersStore.getErrorMsg);
-  const isErrorMsg = computed(() => usersStore.getErrorMsg != "");
 
   interface IReactiveData {
     email: string;
@@ -17,84 +14,55 @@
     email: "student001@jedlik.eu",
     password: "student001",
   });
+
+  function Submit() {
+    if (!anyLoggedUser.value) {
+      usersStore.loginUser({
+        email: r.email,
+        password: r.password,
+      });
+    } else {
+      usersStore.logOut();
+    }
+  }
 </script>
 
 <template>
-  <v-container fluid>
-    <v-row justify="center">
-      <v-col md="4" sm="8" xs="12">
-        <v-card class="elevation-12">
-          <v-card-title v-if="!anyLoggedUser">
-            Login form
-            <v-icon>mdi-login</v-icon>
-          </v-card-title>
-          <v-card-title v-else>
-            Logout form
-            <v-icon>mdi-logout</v-icon>
-          </v-card-title>
-          <v-card-text>
-            <v-form>
-              <v-text-field
-                v-model="r.email"
-                :disabled="anyLoggedUser"
-                :label="anyLoggedUser ? 'Logged user´s email' : 'E-mail'"
-                name="login"
-                type="text"
-              ></v-text-field>
-              <v-text-field
-                v-if="!anyLoggedUser"
-                id="password"
-                v-model="r.password"
-                :disabled="anyLoggedUser"
-                label="Password"
-                name="password"
-                type="password"
-              ></v-text-field>
-            </v-form>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn
-              v-if="!anyLoggedUser"
-              color="success"
-              @click="
-                usersStore.loginUser({
-                  email: r.email,
-                  password: r.password,
-                })
-              "
-            >
-              Login
-            </v-btn>
-            <v-btn v-else class="mt-3" color="warning" @click="usersStore.logOut()">Log out</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-col>
-    </v-row>
-    <!-- Dialog1: Wait for login response -->
-    <v-dialog v-model="isLoading" hide-overlay persistent>
-      <v-card color="primary">
-        <v-card-text>
-          Please wait...
-          <v-progress-linear class="mb-0" color="white" indeterminate></v-progress-linear>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
-    <!-- Dialog 2: Show error messages -->
-    <v-dialog v-model="isErrorMsg">
-      <v-card>
-        <v-card-title>Error</v-card-title>
-        <v-card-text>{{ errorMsg }}</v-card-text>
-        <v-card-actions>
-          <v-btn color="primary" text @click="usersStore.clearErrorMsg()">Close</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-container>
+  <q-page>
+    <div class="row justify-center">
+      <div class="col-12 col-sm-8 col-md-6 col-lg-4 q-gutter-md">
+        <q-form @submit="Submit">
+          <h5 v-if="!anyLoggedUser" class="text-center q-mt-sm q-mb-none">Login</h5>
+          <h5 v-else class="text-center q-mt-sm q-mb-none">Logout</h5>
+          <q-input
+            v-model="r.email"
+            :disable="anyLoggedUser"
+            filled
+            label="e-mail:"
+            :rules="[(v) => (v != null && v != '') || 'Please fill in!']"
+            type="text"
+          />
+          <q-input
+            v-if="!anyLoggedUser"
+            v-model="r.password"
+            filled
+            label="Password:"
+            :rules="[(v) => (v != null && v != '') || 'Please fill in!']"
+            type="text"
+          />
+          <div class="row justify-center">
+            <q-btn
+              class="q-mr-md"
+              color="green"
+              :label="anyLoggedUser ? 'Logout' : 'Login'"
+              no-caps
+              type="submit"
+            />
+          </div>
+        </q-form>
+      </div>
+    </div>
+  </q-page>
 </template>
 
-<style scoped>
-  .v-card-title {
-    background-color: lightgray;
-  }
-</style>
+<style scoped></style>
