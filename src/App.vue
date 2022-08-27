@@ -121,7 +121,7 @@
           <q-btn dense flat icon="mdi-menu" round @click="leftDrawer = !leftDrawer" />
           <q-toolbar-title id="title" style="cursor: pointer" @click="router.push({ path: '/' })">
             <q-avatar>
-              <img src="src/assets/Jedlik_small.png" />
+              <img src="./assets/Jedlik_small.png" />
             </q-avatar>
             Jedlik Vite-Quasar {{ $t("template") }} 2022 -
             {{ usersStore.loggedUser ? usersStore.loggedUser?.name : $t("noUser") }}
